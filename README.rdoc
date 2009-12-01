@@ -1,5 +1,4 @@
-h1. SugarfreeConfig
-===============
+= SugarfreeConfig
 
 Configuration handling the easy way.
 
@@ -8,51 +7,45 @@ stored in a YAML file.
 
 SugarfreeConfig only works with Rails!!
 
-h2. Installation
+== Installation
 
 Just install the gem from Gemcutter
 
-<pre><code>
-$ gem install sugarfree-config --source http://gemcutter.org
-</code></pre>
+  $ gem install sugarfree-config --source http://gemcutter.org
 
-h2. Usage
+== Usage
 
 Config must be stored in "#{RAILS_ROOT}/config/config.yml" and must have
 at least a section for each RAILS_ENV
  
 Configuration can be accessed like this
-<pre><code>
-SugarfreeConfig.a.b.c #=> 'value'
-</code></pre>
- 
+
+  SugarfreeConfig.a.b.c #=> 'value'
+
 which will expect a config file like (given development env)
-<pre><code> 
-development:
-  a:
-    b:
-      c: 'value'
-</code></pre>
+
+  development:
+    a:
+      b:
+        c: 'value'
 
 otherwise a ConfigKeyException will be raised
 
 Configuration is accessed through a ConfigIterator that (as its name says) is
 and iterator and cannot be reused. However there is a workaround to allow the
 repeated use of scoped iterators.
-<pre><code>  
-# This doesn't work
-var a_config = app_config.a
-a_config.b.c #=> 'value'
-a_config.b.c #=> Ups!!! trie to grab config.a.b.c.b.c
+
+  # This doesn't work
+  var a_config = app_config.a
+  a_config.b.c #=> 'value'
+  a_config.b.c #=> Ups!!! trie to grab config.a.b.c.b.c
  
-# Workaround
-var a_config = app_config.a
-a_config.dup.b.c #=> 'value'
-a_config.dup.b.c #=> 'value'
-</code></pre>
+  # Workaround
+  var a_config = app_config.a
+  a_config.dup.b.c #=> 'value'
+  a_config.dup.b.c #=> 'value'
 
-
-h2. Further customization
+== Further customization
 
 By default Sugarfree-config caches in memory the YAML file. If you want the gem 
 to reload this file each time a value is accessed (like in development mode)
@@ -60,19 +53,17 @@ you must force the initialization of the SugarfreeConfig module.
 
 This could be a possible Rails initializer:
 
-<pre><code>
-SugarfreeConfig.init(Rails.env.development?) # True to force reload each time
+  SugarfreeConfig.init(Rails.env.development?) # True to force reload each time
 
-class Object
-  # For people who prefer app_config.a.b.c instead of SugarfreeConfig.a.b.c
-  def app_config
-    SugarfreeConfig
+  class Object
+    # For people who prefer app_config.a.b.c instead of SugarfreeConfig.a.b.c
+    def app_config
+      SugarfreeConfig
+    end
   end
-end
-</code></pre>
 
-h2. Contact
+== Contact
 
 Please mail bugs, suggestions and patches to 
-"contact@davidbarral.com":mailto:contact@davidbarral.com
+contact@davidbarral.com[mailto:contact@davidbarral.com]
 
