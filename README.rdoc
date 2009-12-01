@@ -32,7 +32,7 @@ which will expect a config file like (given development env)
 otherwise a ConfigKeyException will be raised
 
 Configuration is accessed through a ConfigIterator that (as its name says) is
-and iterator and cannot be reused. However there is a workaround to allow the
+an iterator and cannot be reused. However there is a workaround to allow the
 repeated use of scoped iterators.
 
   # This doesn't work
