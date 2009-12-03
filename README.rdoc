@@ -38,7 +38,7 @@ repeated use of scoped iterators.
   # This doesn't work
   var a_config = app_config.a
   a_config.b.c #=> 'value'
-  a_config.b.c #=> Ups!!! trie to grab config.a.b.c.b.c
+  a_config.b.c #=> Ups!!! tried to grab config.a.b.c.b.c
  
   # Workaround
   var a_config = app_config.a
