@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/davidbarral/sugarfree-config"
   s.has_rdoc = false
   s.require_path = "lib"
-  s.files = %w(README.textile LICENSE init.rb lib/sugarfree-config.rb)  
+  s.files = %w(README.rdoc LICENSE init.rb lib/sugarfree-config.rb)  
 end
