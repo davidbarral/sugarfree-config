@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "sugarfree-config"
-  s.version = "1.0.0"
+  s.version = "1.1.0"
   s.summary = "Configuration handling the easy way"
   s.description = "Access to per Rails environment configuration stored in a YAML file"
   s.author = "David Barral"
