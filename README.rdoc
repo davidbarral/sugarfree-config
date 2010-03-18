@@ -2,10 +2,11 @@
 
 Configuration handling the easy way.
 
-SugarfreeConfig allows easy access to per Rails environment config values 
-stored in a YAML file. 
+SugarfreeConfig allows easy access to per Rails environment config values
+stored in a YAML file.
 
-SugarfreeConfig only works with Rails!!
+SugarfreeConfig only works with Rails! since SugarfreecConfig 1.1.0 works
+with rails 3 and ruby 1.9.1
 
 == Installation
 
@@ -13,11 +14,21 @@ Just install the gem from Gemcutter
 
   $ gem install sugarfree-config --source http://gemcutter.org
 
+== Notes on rails 3
+
+In rails 2.x gems were required after Rails.root is initialized. Default rails 3.0
+application generator uses Bundler, and auto-requires all gems before application
+initialization. This could be solved setting in Gemfile:
+
+  "gem 'problem-gem', :require => false
+
+and separating "require 'problem-gem'" in initializer
+
 == Usage
 
 Config must be stored in "#{RAILS_ROOT}/config/config.yml" and must have
 at least a section for each RAILS_ENV
- 
+
 Configuration can be accessed like this
 
   SugarfreeConfig.a.b.c #=> 'value'
@@ -36,20 +47,20 @@ an iterator and cannot be reused. However there is a workaround to allow the
 repeated use of scoped iterators.
 
   # This doesn't work
-  var a_config = app_config.a
+  var a_config = SugarfreeConfig.a
   a_config.b.c #=> 'value'
   a_config.b.c #=> Ups!!! tried to grab config.a.b.c.b.c
- 
+
   # Workaround
-  var a_config = app_config.a
+  var a_config = SugarfreeConfig.a
   a_config.dup.b.c #=> 'value'
   a_config.dup.b.c #=> 'value'
 
 == Further customization
 
-By default Sugarfree-config caches in memory the YAML file. If you want the gem 
+By default Sugarfree-config caches in memory the YAML file. If you want the gem
 to reload this file each time a value is accessed (like in development mode)
-you must force the initialization of the SugarfreeConfig module.  
+you must force the initialization of the SugarfreeConfig module.
 
 This could be a possible Rails initializer:
 
@@ -64,6 +75,6 @@ This could be a possible Rails initializer:
 
 == Contact
 
-Please mail bugs, suggestions and patches to 
+Please mail bugs, suggestions and patches to
 contact@davidbarral.com[mailto:contact@davidbarral.com]
 
