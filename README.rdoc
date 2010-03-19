@@ -16,13 +16,16 @@ Just install the gem from Gemcutter
 
 == Notes on rails 3
 
-In rails 2.x gems were required after Rails.root is initialized. Default rails 3.0
+In rails 2.x gems were required after Rails.root was initialized. Default rails 3.0
 application generator uses Bundler, and auto-requires all gems before application
-initialization. This could be solved setting in Gemfile:
+initialization. This could be solved forcing the bundler not to require the gem.
+In your Gemfile:
 
-  "gem 'problem-gem', :require => false
+  gem 'problematic-gem', :require => false
 
-and separating "require 'problem-gem'" in initializer
+and adding an initializer with the require line 
+
+  require 'problematic-gem'
 
 == Usage
 
