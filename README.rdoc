@@ -21,11 +21,16 @@ application generator uses Bundler, and auto-requires all gems before applicatio
 initialization. This could be solved forcing the bundler not to require the gem.
 In your Gemfile:
 
-  gem 'problematic-gem', :require => false
+  gem 'sugarfree-config', :require => false
 
-and adding an initializer with the require line 
+and adding the require on the app's initializer
 
-  require 'problematic-gem'
+module MyApplication
+  class Application < Rails::Application
+    require 'sugarfree-config'
+    ...
+  end
+end
 
 == Usage
 
