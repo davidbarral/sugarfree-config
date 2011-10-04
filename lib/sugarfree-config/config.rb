@@ -1,4 +1,6 @@
- module SugarfreeConfig
+require 'yaml'
+
+module SugarfreeConfig
 
   #
   # Config base object. Caches the configuration in memory an acts as a factory
@@ -44,7 +46,7 @@
       #
       def fetch_config
         Rails.logger.debug "Loading #{@file}::#{@env}" if Object.const_defined?('Rails')
-        HashWithIndifferentAccess.new(YAML::load(File.new(@file))[@env])
+        YAML::load_file(@file)[@env.to_s]
       end
 
       #
@@ -80,7 +82,7 @@
     #
     def initialize(configuration, first_path_element)
       @scoped_config = configuration
-      @path_elements = [first_path_element]
+      @path_elements = [first_path_element.to_s]
     end
 
     #
@@ -97,7 +99,7 @@
     # forced to make that movement
     #
     def method_missing(symbol, *args)
-      @path_elements << symbol
+      @path_elements << symbol.to_s
       self.next
     end
 

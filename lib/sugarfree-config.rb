@@ -4,7 +4,7 @@ require 'sugarfree-config/config'
 
 # Sugarfree config allows easy access to the config values.
 #
-# See README.textile for usage info
+# See README.rdoc for usage info
 #
 module SugarfreeConfig
 
