@@ -1,56 +1,64 @@
-= SugarfreeConfig
+= sugarfree-config
 
 Configuration handling the easy way.
 
-SugarfreeConfig allows easy access to per Rails environment config values
-stored in a YAML file.
-
-SugarfreeConfig only works with Rails! since SugarfreecConfig 1.1.0 works
-with rails 3 and ruby 1.9.1
+sugarfree-config allows easy access to per environment config values
+stored in a YAML file in Rails and non Rails applications.
 
 == Installation
 
-Just install the gem from Gemcutter
+Just install the gem manually from rubygems.org or add it to your bundle.
 
-  $ gem install sugarfree-config --source http://gemcutter.org
-
-== Notes on rails 3
-
-In rails 2.x gems were required after Rails.root was initialized. Default rails 3.0
-application generator uses Bundler, and auto-requires all gems before application
-initialization. This could be solved forcing the bundler not to require the gem.
-In your Gemfile:
-
-  gem 'sugarfree-config', :require => false
-
-and adding the require on the app's initializer
-
-module MyApplication
-  class Application < Rails::Application
-    require 'sugarfree-config'
-    ...
-  end
-end
+  $ gem install sugarfree-config
 
 == Usage
 
-Config must be stored in "#{RAILS_ROOT}/config/config.yml" and must have
-at least a section for each RAILS_ENV
-
-Configuration can be accessed like this
+Configuration can be accessed using method calls:
 
   SugarfreeConfig.a.b.c #=> 'value'
 
-which will expect a config file like (given development env)
+which will expect a config.yml file like the one below (given development env) 
+stored in the config folder (in Rails apps) or the root folder (in non Rails apps):
 
   development:
     a:
       b:
         c: 'value'
 
-otherwise a ConfigKeyException will be raised
+If asking for akey that does not exists ConfigKeyException will be raised.
 
-Configuration is accessed through a ConfigIterator that (as its name says) is
+A convinience to_hash method is also provided:
+
+  SugarfreeConfig.a.to_hash #=> { 'b' => { 'c' => 'value' } }
+
+== Configuration
+
+sugarfree-config can be used with or without Rails. Default configurations are
+provided for each case. Default configurations can be overriden the explicit use
+of the SugarfreeConfig::init method.
+
+To set the configuration you need to initialize the SugarfreeConfig class:
+
+  SugarfreeConfig.init :env => 'development', :file => 'my_config.yml', :reload => true
+
+  # Default options in Rails apps
+  SugarfreeConfig.init({
+    :env => Rails.env,
+    :file => Rails.root.join('config', 'config.yml'),
+    :reload => Rails.env.development?
+  })
+
+  # Default options in non Rails apps
+  SugarfreeConfig.init({
+    :env => 'development',
+    :file => File.expand_path('config.yml'),
+    :reload => false
+  })
+
+
+== Gotchas
+
+Configuration is accessed through a ConfigIterator class which (as its name says) is
 an iterator and cannot be reused. However there is a workaround to allow the
 repeated use of scoped iterators.
 
@@ -64,25 +72,15 @@ repeated use of scoped iterators.
   a_config.dup.b.c #=> 'value'
   a_config.dup.b.c #=> 'value'
 
-== Further customization
 
-By default Sugarfree-config caches in memory the YAML file. If you want the gem
-to reload this file each time a value is accessed (like in development mode)
-you must force the initialization of the SugarfreeConfig module.
+== Compatibility
 
-This could be a possible Rails initializer:
-
-  SugarfreeConfig.init(Rails.env.development?) # True to force reload each time
-
-  class Object
-    # For people who prefer app_config.a.b.c instead of SugarfreeConfig.a.b.c
-    def app_config
-      SugarfreeConfig
-    end
-  end
+SugarfreeConfig 2.0.0 has been developed and tested against Ruby 1.9.2 and Rails 3.x. 
+Older versions of Ruby and Rails may also work. Just give it a try ;)
 
 == Contact
 
-Please mail bugs, suggestions and patches to
-contact@davidbarral.com[mailto:contact@davidbarral.com]
+Please use GitHub (https://github.com/davidbarral/sugarfree-config) to report bugs,
+make suggestions or send patches.
+
 
