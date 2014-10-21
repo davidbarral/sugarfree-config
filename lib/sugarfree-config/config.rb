@@ -45,7 +45,7 @@ module SugarfreeConfig
       # Fetch the config from the file
       #
       def fetch_config
-        Rails.logger.debug "Loading #{@file}::#{@env}" if Object.const_defined?('Rails')
+        Rails.logger.debug "Loading #{@file}::#{@env}" if Object.const_defined?('Rails') && Rails.logger.present?
         YAML::load_file(@file)[@env.to_s]
       end
 
